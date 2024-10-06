@@ -18,6 +18,8 @@ public class StartGame extends Game{
         super(name);
     }
 
+
+
     public void pause(){
         try {
             Thread.sleep(1000); // Pause 1 sec
@@ -104,7 +106,7 @@ public class StartGame extends Game{
 
     public void set_up_game_names(int num_of_players){
         int cont = 0;
-        System.out.println("You have selected " + YELLOW + num_of_players + RESET + " Players\nPlease enter your players names.\n");
+        System.out.println("You have selected " + YELLOW + num_of_players + RESET + " Player"+(num_of_players>1? "s": "" )+ " \nPlease enter your player"+(num_of_players>1? "s ": " " )+"name"+(num_of_players>1? "s": "" )+".\n");
         while (cont < num_of_players){
             System.out.print(YELLOW+ "name" +(cont+1) +RESET +": ");
             String name = in.nextLine();
@@ -130,6 +132,24 @@ public class StartGame extends Game{
         set_up_game_cards(num_of_players);
 
     }
+
+    public void exit_animation(){
+        String message = "Exiting";
+        StringBuilder dots = new StringBuilder("...");
+
+        for (int i = 0; i < 6; i++) {
+
+            System.out.print("\r" + message + dots);
+            pause();
+            dots.append(".");
+            if (dots.length() > 3) {
+                dots.setLength(1);
+            }
+        }
+
+        System.out.println("\nExited.");
+    }
+
 
 
 
@@ -259,20 +279,53 @@ public class StartGame extends Game{
 
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
-        StartGame game = new StartGame("\u001B[31m"+"B"+"\u001B[0m"+"\u001B[34m"+"lackjack"+"\u001B[0m" +"\u001B[31m"+" G"+"\u001B[0m"+"\u001B[34m"+"ame"+"\u001B[0m");
-        System.out.println("\u001B[31m"+ "W"+"\u001B[0m"+game.BLUE+"elcome to "+game.RESET+ game.getName() +"\n--------------------------"+ game.RESET);
-        System.out.println("How many players are going to play.\n1.One Player\n2.Two Players\n3.Exit\n---------------------------");
-        System.out.print(game.YELLOW + "Enter your choice: "+ game.RESET);
-        int opt =  in.nextInt();
-        switch (opt) {
-            case 1:
-                game.set_up_game_names(1);
-                break;
-            case 2:
-                game.set_up_game_names(2);
+        boolean menu_flag = true;
+        StartGame game = new StartGame("\n" +
+                "                       ▀█████████▄   ▄█          ▄████████  ▄████████    ▄█   ▄█▄      ▄█    ▄████████  ▄████████    ▄█   ▄█▄ \n" +
+                "                         ███    ███ ███         ███    ███ ███    ███   ███ ▄███▀     ███   ███    ███ ███    ███   ███ ▄███▀ \n" +
+                "                         ███    ███ ███         ███    ███ ███    █▀    ███▐██▀       ███   ███    ███ ███    █▀    ███▐██▀   \n" +
+                "                        ▄███▄▄▄██▀  ███         ███    ███ ███         ▄█████▀        ███   ███    ███ ███         ▄█████▀    \n" +
+                "                       ▀▀███▀▀▀██▄  ███       ▀███████████ ███        ▀▀█████▄        ███ ▀███████████ ███        ▀▀█████▄    \n" +
+                "                         ███    ██▄ ███         ███    ███ ███    █▄    ███▐██▄       ███   ███    ███ ███    █▄    ███▐██▄   \n" +
+                "                         ███    ███ ███▌    ▄   ███    ███ ███    ███   ███ ▀███▄     ███   ███    ███ ███    ███   ███ ▀███▄ \n" +
+                "                       ▄█████████▀  █████▄▄██   ███    █▀  ████████▀    ███   ▀█▀ █▄ ▄███   ███    █▀  ████████▀    ███   ▀█▀ \n" +
+                "                                    ▀                                   ▀         ▀▀▀▀▀▀                            ▀         \n");
 
-                break;
+        System.out.println(game.RED + game.getName()+game.RESET +"\n");
 
+        while(menu_flag) {
+            System.out.println( "                                            ------------------------------------------------------\n" +
+
+                    "                                           |                                                      |\n                                           |" +
+                    "                                                      |\n" +
+                    "                                           |        _____   ____   ____  __ __                    |\n" +
+                    "                                           |       /     \\_/ __ \\ /    \\|  |  \\                   |\n" +
+                    "                                           |       |  Y Y  \\  ___/|   |  \\  |  /                  |\n" +
+                    "                                           |       |__|_|  /\\___  >___|  /____/                   |\n" +
+                    "                                           |            \\/     \\/     \\/                          |\n" +
+                    "                                           |                                                      |");
+            System.out.println("                                           |    How many players are going to play?               |\n" +
+                    "                                           |               1. One Player                          |\n" +
+                    "                                           |               2. Two Players                         |\n" +
+                    "                                           |               3. Exit                                |\n" +
+                    "                                            ------------------------------------------------------");
+            System.out.print(game.YELLOW + "\nEnter your choice: " + game.RESET);
+            int opt = in.nextInt();
+            switch (opt) {
+                case 1:
+                    game.set_up_game_names(1);
+                    break;
+                case 2:
+                    game.set_up_game_names(2);
+                    break;
+                    case 3:
+                        menu_flag = false;
+                        game.exit_animation();
+                        System.exit(0);
+                        break;
+                default:
+                    System.out.println("Invalid option! Try again.");
+            }
         }
 
 
