@@ -37,15 +37,17 @@ public class HumanPlayer extends Player{
     public GameCard viewDealerCard(){
         return this.hand.getFirst();
     }
+
     public int getScore() {
-        return score;
+        return this.score;
     }
 
     public void resetHand(){
         this.hand.clear();
     }
     public void setScore(int score) {
-        score = score;
+
+        this.score = score;
     }
 
     public void printCurrentHand(){
